@@ -1,9 +1,10 @@
-modules = ["nodejs-20"]
+modules = ["bash"]
 [agent]
 expertMode = true
 
 [nix]
 channel = "stable-25_05"
+packages = ["imagemagick"]
 
 [workflows]
 runButton = "Project"
