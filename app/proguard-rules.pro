@@ -1,26 +1,21 @@
-# Don't obfuscate - keep everything for TWA
+# Don't optimize or obfuscate - TWA needs all classes intact
+-dontoptimize
 -dontobfuscate
+-dontshrink
 
 # Keep all attributes
 -keepattributes *Annotation*,Signature,Exception,InnerClasses,EnclosingMethod
 
-# Keep all classes for Android Browser Helper (TWA)
+# Keep everything - TWA is lightweight and needs all classes
+-keep class ** { *; }
+
+# Specific keeps for TWA components
 -keep class com.google.androidbrowserhelper.** { *; }
 -keep class androidx.browser.** { *; }
-
-# Keep AppCompat
 -keep class androidx.appcompat.** { *; }
 -keep class androidx.core.** { *; }
 
-# Keep WebView related classes
--keepclassmembers class * {
-    @android.webkit.JavascriptInterface <methods>;
-}
-
-# Keep Custom Tabs
--keep class android.support.customtabs.** { *; }
--keep class androidx.browser.customtabs.** { *; }
-
-# Don't warn about missing classes
+# Don't warn
 -dontwarn com.google.androidbrowserhelper.**
 -dontwarn androidx.browser.**
+-dontwarn androidx.appcompat.**
