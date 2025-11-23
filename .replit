@@ -15,19 +15,18 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Mandi TWA Server"
+args = "Project Info"
 
 [[workflows.workflow]]
-name = "Mandi TWA Server"
+name = "Project Info"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "node server.js"
-waitForPort = 5000
+args = "node info.js"
 
 [workflows.workflow.metadata]
-outputType = "webview"
+outputType = "console"
 
 [[ports]]
 localPort = 5000

@@ -1,16 +1,15 @@
 {
   "name": "mandi-twa",
   "version": "1.0.0",
-  "description": "Mandi Trusted Web Activity Application",
-  "main": "server.js",
+  "description": "Mandi Tracker - Trusted Web Activity Android App",
+  "main": "info.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "info": "node info.js"
   },
   "keywords": [
     "twa",
-    "pwa",
-    "trusted-web-activity"
+    "android",
+    "mandi-tracker"
   ],
   "author": "",
   "license": "Apache-2.0"
