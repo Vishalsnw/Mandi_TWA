@@ -17,3 +17,6 @@ gen/
 out/
 release/
 node_modules/
+
+# Keep Gradle wrapper jar (required for builds)
+!gradle/wrapper/gradle-wrapper.jar
