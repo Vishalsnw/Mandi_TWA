@@ -16,11 +16,13 @@ This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Track
 - **Signing**: Automated via GitHub Actions (requires secrets)
 
 ## Recent Changes
-- 2024-11-23: Complete Android TWA project setup
+- 2024-11-23: Complete Android TWA project setup with auto-keystore
   - Created Android project structure with Gradle build system
-  - Configured AndroidManifest.xml for TWA
-  - Added splash screen and theme configuration
-  - Created GitHub Actions workflow for automated APK/AAB builds
+  - Configured AndroidManifest.xml for TWA targeting mandi-tracker.vercel.app
+  - Added splash screen and theme configuration (green theme)
+  - Created GitHub Actions workflow with AUTO-KEYSTORE generation
+  - Workflow auto-generates signing key if secrets not provided (for testing)
+  - Workflow extracts and outputs SHA-256 fingerprint
   - Added comprehensive documentation and setup instructions
   - Configured Digital Asset Links template
 
@@ -63,19 +65,33 @@ Since this is an Android project, it **cannot be built directly in Replit**. Bui
 
 ## GitHub Actions Workflow
 The `.github/workflows/build-release.yml` file:
+- **AUTO-KEYSTORE**: Automatically generates keystore if secrets not provided (for testing)
 - Triggers on push to main/master branches
 - Triggers on version tags (v*)
 - Builds both APK and AAB files
-- Signs releases if secrets are configured
+- Signs releases (auto-generated or custom keystore)
+- Extracts and outputs SHA-256 fingerprint
+- Creates fingerprint-info artifact with setup instructions
 - Uploads artifacts to GitHub Actions
 - Creates GitHub releases for version tags
 
-## Required GitHub Secrets
-To enable signed builds, configure these secrets in GitHub:
+## Keystore Modes
+
+### Auto-Generated (Default - Testing Only)
+- No setup required - just push to GitHub!
+- Keystore auto-generated on each build
+- Perfect for testing and development
+- **WARNING**: Fingerprint changes every build
+- **NOT** suitable for production or Google Play
+
+### Custom Keystore (Production)
+Configure these secrets in GitHub for production builds:
 - `SIGNING_KEY`: Base64 encoded keystore
 - `KEY_ALIAS`: Keystore alias
 - `KEY_STORE_PASSWORD`: Keystore password
 - `KEY_PASSWORD`: Key password
+
+With secrets configured, workflow uses your keystore instead of auto-generating.
 
 ## Digital Asset Links Setup
 For the TWA to work properly:
