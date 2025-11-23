@@ -14,11 +14,19 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        release {
+            // Signing will be configured by GitHub Actions
+            // or can be manually configured for local builds
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
