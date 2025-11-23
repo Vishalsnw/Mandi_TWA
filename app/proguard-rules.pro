@@ -1,24 +1,26 @@
--keepattributes *Annotation*
+# Don't obfuscate - keep everything for TWA
+-dontobfuscate
+
+# Keep all attributes
+-keepattributes *Annotation*,Signature,Exception,InnerClasses,EnclosingMethod
 
 # Keep all classes for Android Browser Helper (TWA)
 -keep class com.google.androidbrowserhelper.** { *; }
 -keep class androidx.browser.** { *; }
 
+# Keep AppCompat
+-keep class androidx.appcompat.** { *; }
+-keep class androidx.core.** { *; }
+
 # Keep WebView related classes
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
-    public boolean *(android.webkit.WebView, java.lang.String);
-}
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, java.lang.String);
-}
 
-# Keep Custom Tabs related classes
+# Keep Custom Tabs
 -keep class android.support.customtabs.** { *; }
 -keep class androidx.browser.customtabs.** { *; }
 
-# Keep FileProvider
--keep class androidx.core.content.FileProvider { *; }
+# Don't warn about missing classes
+-dontwarn com.google.androidbrowserhelper.**
+-dontwarn androidx.browser.**

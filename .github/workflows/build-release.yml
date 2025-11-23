@@ -174,20 +174,42 @@ jobs:
           cat fingerprint-info.txt
 
       # =========================
-      # Artifacts
+      # Cleanup and Artifacts
       # =========================
+
+      - name: Rename and cleanup APK
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          cd app/build/outputs/apk/release
+          # Keep only the signed APK
+          mv *-signed.apk mandi-tracker-signed.apk || true
+          # Remove unsigned and aligned versions
+          rm -f *-unsigned.apk *-aligned.apk app-release.apk || true
+          ls -lah
+
+      - name: Rename and cleanup AAB
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          cd app/build/outputs/bundle/release
+          # Keep only the signed AAB
+          mv *-signed.aab mandi-tracker-signed.aab || true
+          # Remove unsigned and aligned versions
+          rm -f *-unsigned.aab *-aligned.aab app-release.aab || true
+          ls -lah
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           name: mandi-tracker-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: app/build/outputs/apk/release/mandi-tracker-signed.apk
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           name: mandi-tracker-aab
-          path: app/build/outputs/bundle/release/*.aab
+          path: app/build/outputs/bundle/release/mandi-tracker-signed.aab
 
       - name: Upload Fingerprint Info
         uses: actions/upload-artifact@v4
@@ -205,7 +227,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            app/build/outputs/apk/release/*.apk
-            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/apk/release/mandi-tracker-signed.apk
+            app/build/outputs/bundle/release/mandi-tracker-signed.aab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
