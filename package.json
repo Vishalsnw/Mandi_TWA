@@ -1,0 +1,17 @@
+{
+  "name": "mandi-twa",
+  "version": "1.0.0",
+  "description": "Mandi Trusted Web Activity Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "twa",
+    "pwa",
+    "trusted-web-activity"
+  ],
+  "author": "",
+  "license": "Apache-2.0"
+}
