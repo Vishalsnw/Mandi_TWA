@@ -47,35 +47,35 @@
             </intent-filter>
 
             <meta-data
-                android:name="android.support.customtabs.trusted.DEFAULT_URL"
+                android:name="androidx.browser.trusted.DEFAULT_URL"
                 android:value="https://mandi-tracker.vercel.app/" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR"
+                android:name="androidx.browser.trusted.STATUS_BAR_COLOR"
                 android:resource="@color/colorPrimary" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR"
+                android:name="androidx.browser.trusted.NAVIGATION_BAR_COLOR"
                 android:resource="@color/colorPrimary" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.SPLASH_IMAGE_DRAWABLE"
+                android:name="androidx.browser.trusted.SPLASH_IMAGE_DRAWABLE"
                 android:resource="@drawable/splash" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_BACKGROUND_COLOR"
+                android:name="androidx.browser.trusted.SPLASH_SCREEN_BACKGROUND_COLOR"
                 android:resource="@color/colorPrimary" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_FADE_OUT_DURATION"
+                android:name="androidx.browser.trusted.SPLASH_SCREEN_FADE_OUT_DURATION"
                 android:value="300" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.FILE_PROVIDER_AUTHORITY"
+                android:name="androidx.browser.trusted.FILE_PROVIDER_AUTHORITY"
                 android:value="com.mandi.tracker.fileprovider" />
 
             <meta-data
-                android:name="android.support.customtabs.trusted.FALLBACK_STRATEGY"
+                android:name="androidx.browser.trusted.FALLBACK_STRATEGY"
                 android:value="customtabs" />
         </activity>
 

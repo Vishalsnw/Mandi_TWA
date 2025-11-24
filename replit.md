@@ -1,7 +1,7 @@
 # Mandi Tracker TWA - Replit Project
 
 ## Overview
-This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Tracker web application (https://mandi-tracker.vercel.app/) into a native Android app. The project includes automated GitHub Actions workflows to build release APK and AAB files.
+This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Tracker web application (https://mandi-tracker.vercel.app/) into a native Android app called **MandiMitra**. The project includes automated GitHub Actions workflows to build release APK and AAB files.
 
 ## Project Type
 - **Platform**: Android
@@ -17,11 +17,12 @@ This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Track
 
 ## Recent Changes
 - 2024-11-24: **CRITICAL FIX - App Crash Issue Resolved**
-  - Added missing `app/src/main/res/values/styles.xml` file
-  - Created custom `AppTheme` and `SplashTheme` styles
-  - Updated AndroidManifest.xml to use custom themes instead of direct AppCompat references
-  - Fixed resource references for proper theme inheritance
-  - **Root Cause**: App was crashing on launch because it was referencing Theme.AppCompat.Light.NoActionBar directly without proper resource configuration. Added proper theme definitions with color resources.
+  - **Root Cause**: App was using legacy `android.support.customtabs.trusted.*` meta-data keys instead of AndroidX equivalents
+  - Updated all meta-data keys in AndroidManifest.xml from `android.support.customtabs.trusted.*` to `androidx.browser.trusted.*`
+  - Changed app name from "Mandi Tracker" to "MandiMitra" in strings.xml
+  - Added missing `app/src/main/res/values/styles.xml` file with AppTheme and SplashTheme
+  - Updated AndroidManifest.xml to use custom themes
+  - Fixed compatibility with androidbrowserhelper 2.5.0 library which requires AndroidX keys
 
 - 2024-11-23: Complete Android TWA project setup with auto-keystore
   - Created Android project structure with Gradle build system
