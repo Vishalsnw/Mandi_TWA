@@ -22,12 +22,12 @@ args = "Project Info"
 name = "Project Info"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "bash project-info.sh"
-
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./project-info.sh"
 
 [[ports]]
 localPort = 5000
