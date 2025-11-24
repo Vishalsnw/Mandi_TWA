@@ -1,140 +1,47 @@
-# Mandi Tracker TWA - Replit Project
+# Mandi Tracker - Android WebView App
 
 ## Overview
-This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Tracker web application (https://mandi-tracker.vercel.app/) into a native Android app called **MandiMitra**. The project includes automated GitHub Actions workflows to build release APK and AAB files.
+This is an Android WebView application that wraps the Mandi Tracker web app (https://mandi-tracker.vercel.app/) into a native Android app. The app was recently converted from a Trusted Web Activity (TWA) to a WebView implementation.
 
-## Project Type
-- **Platform**: Android
-- **Build System**: Gradle
-- **Language**: XML/Java configuration (no Java code needed for basic TWA)
-- **CI/CD**: GitHub Actions
+## Recent Changes (November 24, 2025)
+- **Converted from TWA to WebView**: Complete migration from Trusted Web Activity to WebView implementation
+- Created `MainActivity.java` with full WebView configuration
+- Created `activity_main.xml` layout for WebView
+- Updated `AndroidManifest.xml` to use MainActivity instead of LauncherActivity
+- Removed TWA dependencies (`androidbrowserhelper`, `browser`) from `build.gradle`
+- Added WebView support dependencies (`androidx.webkit`)
+- Updated README.md with WebView-specific documentation
 
-## Architecture
-- **TWA Target**: https://mandi-tracker.vercel.app/
+## Project Architecture
+
+### Key Components
+1. **MainActivity.java**: Main activity that hosts the WebView and loads the web app
+2. **activity_main.xml**: Layout file containing the WebView component
+3. **AndroidManifest.xml**: App manifest with WebView permissions and MainActivity configuration
+4. **build.gradle**: Build configuration with WebView dependencies
+
+### Dependencies
+- `androidx.appcompat:appcompat:1.6.1` - AppCompat support library
+- `androidx.webkit:webkit:1.9.0` - WebView support library
+- `com.google.android.material:material:1.11.0` - Material Design components
+
+### Configuration
 - **Package Name**: com.mandi.tracker
-- **Build Outputs**: APK and AAB files
-- **Signing**: Automated via GitHub Actions (requires secrets)
+- **Target URL**: https://mandi-tracker.vercel.app/
+- **Min SDK**: 21 (Android 5.0)
+- **Target SDK**: 34 (Android 14)
+- **WebView Features**: JavaScript enabled, DOM storage, database support, back navigation
 
-## Recent Changes
-- 2024-11-24: **CRITICAL FIX - App Crash Issue Resolved**
-  - **Root Cause**: App was using legacy `android.support.customtabs.trusted.*` meta-data keys instead of AndroidX equivalents
-  - Updated all meta-data keys in AndroidManifest.xml from `android.support.customtabs.trusted.*` to `androidx.browser.trusted.*`
-  - Changed app name from "Mandi Tracker" to "MandiMitra" in strings.xml
-  - Added missing `app/src/main/res/values/styles.xml` file with AppTheme and SplashTheme
-  - Updated AndroidManifest.xml to use custom themes
-  - Fixed compatibility with androidbrowserhelper 2.5.0 library which requires AndroidX keys
-
-- 2024-11-23: Complete Android TWA project setup with auto-keystore
-  - Created Android project structure with Gradle build system
-  - Configured AndroidManifest.xml for TWA targeting mandi-tracker.vercel.app
-  - Added splash screen and theme configuration (green theme)
-  - Created GitHub Actions workflow with AUTO-KEYSTORE generation
-  - Workflow auto-generates signing key if secrets not provided (for testing)
-  - Workflow extracts and outputs SHA-256 fingerprint
-  - Added comprehensive documentation and setup instructions
-  - Configured Digital Asset Links template
-
-## Project Structure
-```
-├── app/
-│   ├── src/main/
-│   │   ├── AndroidManifest.xml      - App configuration and TWA settings
-│   │   └── res/                     - Android resources (colors, strings, styles, etc)
-│   │       ├── values/
-│   │       │   ├── colors.xml       - App color definitions
-│   │       │   ├── strings.xml      - App text resources
-│   │       │   └── styles.xml       - App themes and styles (FIXED)
-│   │       └── drawable/
-│   │           └── splash.xml       - Splash screen configuration
-│   ├── build.gradle                 - App-level build configuration
-│   └── proguard-rules.pro          - Code optimization rules
-├── .github/workflows/
-│   └── build-release.yml           - GitHub Actions CI/CD workflow
-├── build.gradle                     - Project-level build configuration
-├── settings.gradle                  - Gradle settings
-├── gradle.properties               - Gradle properties
-├── assetlinks.json                 - Digital Asset Links configuration
-└── README.md                        - Complete documentation
-```
-
-## Key Files
-- **AndroidManifest.xml**: Defines TWA configuration, target URL, and app permissions
-- **build-release.yml**: GitHub Actions workflow for automated builds
-- **assetlinks.json**: Must be hosted on the target website for verification
-- **styles.xml**: App theme definitions (CRITICAL - was missing, causing crashes)
-- **colors.xml**: Theme colors (green theme #4CAF50)
-- **strings.xml**: App name and text resources
-
-## Build Process
-Since this is an Android project, it **cannot be built directly in Replit**. Builds occur via:
-
-1. **GitHub Actions** (Recommended): 
-   - Automatic builds on push to main/master
-   - Generates signed APK and AAB files
-   - Artifacts available for download
-
-2. **Local Build** (Requires Android SDK):
-   - Requires Java JDK 17+
-   - Requires Android SDK with build tools
-   - Run: `./gradlew assembleRelease`
-
-## GitHub Actions Workflow
-The `.github/workflows/build-release.yml` file:
-- **AUTO-KEYSTORE**: Automatically generates keystore if secrets not provided (for testing)
-- Triggers on push to main/master branches
-- Triggers on version tags (v*)
-- Builds both APK and AAB files
-- Signs releases (auto-generated or custom keystore)
-- Extracts and outputs SHA-256 fingerprint
-- Creates fingerprint-info artifact with setup instructions
-- Uploads artifacts to GitHub Actions
-- Creates GitHub releases for version tags
-
-## Keystore Modes
-
-### Auto-Generated (Default - Testing Only)
-- No setup required - just push to GitHub!
-- Keystore auto-generated on each build
-- Perfect for testing and development
-- **WARNING**: Fingerprint changes every build
-- **NOT** suitable for production or Google Play
-
-### Custom Keystore (Production)
-Configure these secrets in GitHub for production builds:
-- `SIGNING_KEY`: Base64 encoded keystore
-- `KEY_ALIAS`: Keystore alias
-- `KEY_STORE_PASSWORD`: Keystore password
-- `KEY_PASSWORD`: Key password
-
-With secrets configured, workflow uses your keystore instead of auto-generating.
-
-## Digital Asset Links Setup
-For the TWA to work properly:
-1. Generate SHA-256 fingerprint from your keystore
-2. Update `assetlinks.json` with the fingerprint
-3. Host at: `https://mandi-tracker.vercel.app/.well-known/assetlinks.json`
-4. Ensure it returns Content-Type: application/json
-
-## Customization Points
-- **App Name**: `app/src/main/res/values/strings.xml`
-- **Colors**: `app/src/main/res/values/colors.xml`
-- **Themes**: `app/src/main/res/values/styles.xml`
-- **Target URL**: `app/src/main/AndroidManifest.xml` (metadata and intent-filter)
-- **Package Name**: `app/build.gradle` (applicationId)
-
-## Testing & Deployment
-1. Push code to GitHub
-2. Check Actions tab for build status
-3. Download APK/AAB from Artifacts
-4. Test APK on Android device
-5. Upload AAB to Google Play Console
-
-## Troubleshooting
-- **App crashes on launch**: Ensure styles.xml exists with proper theme definitions
-- **Build fails**: Check GitHub Actions logs for specific errors
-- **TWA shows browser UI**: Digital Asset Links verification failed
+## Build Instructions
+This is an Android project that should be built using:
+- Android Studio
+- Gradle build system
+- Command: `./gradlew assembleRelease` for release builds
 
 ## User Preferences
-- This is an Android build project, not a web application
-- Builds should happen via GitHub Actions
-- Documentation should be comprehensive for GitHub-based workflow
+Not yet documented - to be added as user preferences are expressed.
+
+## Notes
+- The app uses WebView instead of TWA for better control and JavaScript bridge capabilities
+- All TWA-specific configurations and dependencies have been removed
+- The app maintains the same visual appearance (splash screen, icons, colors)

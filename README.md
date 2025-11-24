@@ -1,233 +1,91 @@
-# Mandi Tracker TWA - Trusted Web Activity Android App
+# Mandi Tracker - Android WebView App
 
-This is an Android Trusted Web Activity (TWA) application that wraps the Mandi Tracker web app hosted at [https://mandi-tracker.vercel.app/](https://mandi-tracker.vercel.app/) into a native Android app.
+This is an Android WebView application that wraps the Mandi Tracker web app hosted at [https://mandi-tracker.vercel.app/](https://mandi-tracker.vercel.app/) into a native Android app.
 
-## 📱 What is a TWA?
+## 📱 What is a WebView App?
 
-Trusted Web Activities allow you to package your Progressive Web App (PWA) as a native Android application that can be distributed via Google Play Store. The app runs your website in full-screen mode without any browser UI.
+A WebView app embeds your web application inside a native Android application using Android's WebView component. This provides full control over the web content and allows for JavaScript-to-native communication via JavaScript bridges.
 
 ## 🚀 Features
 
-- ✅ **Auto-Keystore Generation** - Start building immediately without manual setup!
 - ✅ Full-screen web app experience
-- ✅ Automatic builds via GitHub Actions
-- ✅ Release APK and AAB generation
-- ✅ Digital Asset Links verification
+- ✅ JavaScript enabled with DOM storage support
 - ✅ Custom splash screen and app icon
+- ✅ Back button navigation support
+- ✅ Responsive layout for all screen sizes
 - ✅ Status bar and navigation bar theming
+- ✅ Full JavaScript-to-native bridge capabilities
+- ✅ Works on Android 5.0 (API 21) and above
 
-## 🎯 Quick Start (No Setup Required!)
+## 🎯 Quick Start
 
-1. **Push to GitHub**
+### Prerequisites
+
+- Android Studio (latest version recommended)
+- JDK 8 or higher
+- Android SDK 34
+- Gradle 8.1.4 or higher
+
+### Building the App
+
+1. **Clone the repository**
    ```bash
-   git push origin main
+   git clone <your-repo-url>
+   cd Mandi_WebView
    ```
 
-2. **Get Your APK**
-   - Go to **Actions** tab
-   - Wait for build to complete
-   - Download `mandi-tracker-apk` and `fingerprint-info` artifacts
+2. **Open in Android Studio**
+   - Open Android Studio
+   - Select "Open an Existing Project"
+   - Navigate to the project directory and select it
 
-3. **Install and Test**
+3. **Build the APK**
+   - Click "Build" → "Build Bundle(s) / APK(s)" → "Build APK(s)"
+   - Or use Gradle:
+     ```bash
+     ./gradlew assembleRelease
+     ```
+
+4. **Install and Test**
    - Transfer APK to Android device
+   - Enable "Install from Unknown Sources" if needed
    - Install and test the app
-
-That's it! The workflow automatically generates a keystore and signs your APK.
 
 ## 📦 Project Structure
 
 ```
-Mandi_TWA/
+Mandi_WebView/
 ├── app/
 │   ├── src/main/
-│   │   ├── AndroidManifest.xml
+│   │   ├── java/com/mandi/tracker/
+│   │   │   └── MainActivity.java
 │   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   │   └── activity_main.xml
 │   │   │   ├── values/
 │   │   │   │   ├── strings.xml
 │   │   │   │   └── colors.xml
-│   │   │   ├── drawable/
-│   │   │   │   └── splash.xml
-│   │   │   └── xml/
-│   │   │       └── file_paths.xml
-│   │   └── java/com/mandi/tracker/
+│   │   │   └── drawable/
+│   │   │       └── splash.xml
+│   │   └── AndroidManifest.xml
 │   ├── build.gradle
 │   └── proguard-rules.pro
-├── .github/workflows/
-│   └── build-release.yml
 ├── build.gradle
 ├── settings.gradle
-└── assetlinks.json
+└── README.md
 ```
 
-## 🔧 Two Build Modes
+## 🔧 WebView Configuration
 
-### Mode 1: Auto-Generated Keystore (Testing)
+The app uses the following WebView settings for optimal performance:
 
-**No configuration needed!** Just push to GitHub.
-
-✅ **Pros:**
-- Works immediately out of the box
-- Perfect for testing and development
-- No manual keystore creation
-
-⚠️ **Cons:**
-- Keystore changes on EVERY build (new fingerprint each time)
-- NOT suitable for production or Google Play Store
-- Cannot update existing installations
-
-**Use Case:** Quick testing, demos, internal testing
-
-### Mode 2: Custom Keystore (Production)
-
-**For production releases and Google Play Store.**
-
-✅ **Pros:**
-- Consistent fingerprint across builds
-- Can update existing installations
-- Required for Google Play Store
-
-⚠️ **Setup Required:**
-- Must create and configure keystore
-- Manage GitHub secrets
-
-**Use Case:** Production releases, Google Play Store
-
-## 🔐 Production Setup (Custom Keystore)
-
-### 1. Create Your Keystore
-
-```bash
-keytool -genkey -v -keystore mandi-tracker.keystore \
-  -alias mandi \
-  -keyalg RSA \
-  -keysize 2048 \
-  -validity 10000
-```
-
-**Important:** Save your passwords! You'll need them for GitHub secrets.
-
-### 2. Configure GitHub Secrets
-
-1. Go to **Settings** → **Secrets and variables** → **Actions**
-2. Click **New repository secret**
-3. Add these four secrets:
-
-#### SIGNING_KEY
-Encode your keystore to base64:
-```bash
-base64 mandi-tracker.keystore | tr -d '\n' > keystore-base64.txt
-```
-Copy the content and create secret `SIGNING_KEY`
-
-#### KEY_ALIAS
-Your keystore alias (e.g., `mandi`)
-
-#### KEY_STORE_PASSWORD
-Your keystore password
-
-#### KEY_PASSWORD
-Your key password
-
-### 3. Push and Build
-
-Once secrets are configured, the workflow automatically uses your custom keystore!
-
-```bash
-git push origin main
-```
-
-## 📥 Getting Your Build Artifacts
-
-After any build (auto or custom keystore):
-
-1. Go to **Actions** tab in GitHub
-2. Click on the latest workflow run
-3. Scroll to **Artifacts** section
-4. Download:
-   - `mandi-tracker-apk` - APK file for Android devices
-   - `mandi-tracker-aab` - AAB file for Google Play Store
-   - `fingerprint-info` - SHA-256 fingerprint and setup instructions
-
-## 🔗 Digital Asset Links Setup
-
-To enable full TWA functionality (no browser UI):
-
-### 1. Get Your SHA-256 Fingerprint
-
-Download the `fingerprint-info` artifact from your build. It contains your SHA-256 fingerprint.
-
-### 2. Update assetlinks.json
-
-```json
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.mandi.tracker",
-    "sha256_cert_fingerprints": [
-      "YOUR_SHA256_FINGERPRINT_HERE"
-    ]
-  }
-}]
-```
-
-### 3. Host on Your Website
-
-Place the file at:
-```
-https://mandi-tracker.vercel.app/.well-known/assetlinks.json
-```
-
-**For Vercel:** Create `.well-known/assetlinks.json` in your web project
-
-**Important for Auto-Keystore Users:**
-- The fingerprint changes on every build
-- You'll need to update assetlinks.json after each build
-- For persistent fingerprints, use a custom keystore
-
-## 🎨 Customization
-
-### Change App Name
-Edit `app/src/main/res/values/strings.xml`:
-```xml
-<string name="app_name">Your App Name</string>
-```
-
-### Change Colors
-Edit `app/src/main/res/values/colors.xml`:
-```xml
-<color name="colorPrimary">#YourColor</color>
-```
-
-### Change Package Name & URL
-1. Update `app/build.gradle` → `applicationId`
-2. Update `app/src/main/AndroidManifest.xml` → host and package references
-3. Update `assetlinks.json` → `package_name`
-
-## 🤖 GitHub Actions Workflow
-
-The workflow automatically:
-1. ✅ Generates keystore (if secrets not provided)
-2. ✅ Builds release APK and AAB files
-3. ✅ Signs the builds
-4. ✅ Extracts SHA-256 fingerprint
-5. ✅ Creates fingerprint info file
-6. ✅ Uploads artifacts for download
-7. ✅ Creates GitHub releases for version tags
-
-### Triggering a Build
-
-**Automatic:** Push to main/master branch
-```bash
-git push origin main
-```
-
-**Manual:** Go to Actions → Build Release APK and AAB → Run workflow
-
-**Release:** Create and push a version tag
-```bash
-git tag v1.0.0
-git push origin v1.0.0
+```java
+WebSettings webSettings = webView.getSettings();
+webSettings.setJavaScriptEnabled(true);          // Enable JavaScript
+webSettings.setDomStorageEnabled(true);          // Enable DOM storage
+webSettings.setDatabaseEnabled(true);            // Enable database
+webSettings.setLoadWithOverviewMode(true);       // Load with overview
+webSettings.setUseWideViewPort(true);            // Use wide viewport
 ```
 
 ## 📱 App Configuration
@@ -238,51 +96,156 @@ git push origin v1.0.0
 - **Target SDK**: 34 (Android 14)
 - **Theme Color**: #4CAF50 (Green)
 
+## 🎨 Customization
+
+### Change App Name
+
+Edit `app/src/main/res/values/strings.xml`:
+```xml
+<string name="app_name">Your App Name</string>
+```
+
+### Change Website URL
+
+Edit `app/src/main/java/com/mandi/tracker/MainActivity.java`:
+```java
+webView.loadUrl("https://your-website-url.com/");
+```
+
+### Change Colors
+
+Edit `app/src/main/res/values/colors.xml`:
+```xml
+<color name="colorPrimary">#YourColor</color>
+```
+
+### Change Package Name
+
+1. Update `app/build.gradle` → `applicationId`
+2. Update `app/src/main/AndroidManifest.xml` if needed
+3. Refactor package in Android Studio (right-click package → Refactor → Rename)
+
+## 🔐 Creating a Keystore for Signing
+
+For production releases, you need to sign your app:
+
+```bash
+keytool -genkey -v -keystore mandi-tracker.keystore \
+  -alias mandi \
+  -keyalg RSA \
+  -keysize 2048 \
+  -validity 10000
+```
+
+Then update `app/build.gradle` to add signing configuration:
+
+```gradle
+android {
+    signingConfigs {
+        release {
+            storeFile file("../mandi-tracker.keystore")
+            storePassword "your-store-password"
+            keyAlias "mandi"
+            keyPassword "your-key-password"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+    }
+}
+```
+
 ## 🏪 Publishing to Google Play Store
 
-**You MUST use a custom keystore for Google Play!**
-
-1. Configure custom keystore secrets (see above)
-2. Build AAB file via GitHub Actions
-3. Download the `mandi-tracker-aab` artifact
-4. Create Google Play Console account
-5. Create new app
-6. Upload AAB file
-7. Complete store listing, content rating, etc.
-8. Submit for review
-
-## 🔄 Build Comparison
-
-| Feature | Auto-Keystore | Custom Keystore |
-|---------|--------------|-----------------|
-| Setup Required | None ✅ | Create keystore & secrets |
-| Fingerprint | Changes every build ⚠️ | Persistent ✅ |
-| Good for Testing | Yes ✅ | Yes ✅ |
-| Google Play Store | No ❌ | Yes ✅ |
-| Can Update App | No ❌ | Yes ✅ |
-| Recommended for | Testing & demos | Production releases |
+1. Create a production keystore (see above)
+2. Build a signed AAB file:
+   ```bash
+   ./gradlew bundleRelease
+   ```
+3. Create Google Play Console account
+4. Create new app
+5. Upload AAB file (located in `app/build/outputs/bundle/release/`)
+6. Complete store listing, content rating, privacy policy, etc.
+7. Submit for review
 
 ## 🐛 Troubleshooting
 
-### TWA shows browser UI instead of full-screen
-- Digital Asset Links verification failed
-- Check that assetlinks.json is accessible at `/.well-known/assetlinks.json`
-- Verify SHA-256 fingerprint matches (download `fingerprint-info` artifact)
-- For auto-keystore: fingerprint changes on every build
+### WebView shows blank page
+- Check internet connection
+- Verify the URL is correct in MainActivity.java
+- Check Android logs: `adb logcat | grep WebView`
+- Ensure INTERNET permission is in AndroidManifest.xml
 
-### Build fails on GitHub Actions
-- Check GitHub Actions logs for specific errors
-- If using custom keystore, verify all 4 secrets are correctly set
-- Ensure SIGNING_KEY has no line breaks (use `tr -d '\n'`)
+### JavaScript not working
+- Verify `setJavaScriptEnabled(true)` is set
+- Check for JavaScript errors in web console
+- Enable WebView debugging: `WebView.setWebContentsDebuggingEnabled(true)`
 
 ### "Cannot install app" on Android
 - Enable "Install from Unknown Sources" in device settings
 - Make sure APK is fully downloaded
 - Try uninstalling any existing version first
 
-### Different fingerprint on each build
-- This is normal for auto-generated keystore
-- For consistent fingerprint, use custom keystore (see Production Setup)
+### App crashes on startup
+- Check Android logs: `adb logcat`
+- Verify all resources (icons, layouts) exist
+- Check for missing dependencies in build.gradle
+
+## 🔍 Debugging WebView
+
+Enable remote debugging in your MainActivity:
+
+```java
+if (BuildConfig.DEBUG) {
+    WebView.setWebContentsDebuggingEnabled(true);
+}
+```
+
+Then open Chrome and navigate to `chrome://inspect` to debug the WebView.
+
+## 📊 WebView vs TWA Comparison
+
+| Feature | WebView | TWA |
+|---------|---------|-----|
+| **Rendering** | Embedded browser | User's Chrome browser |
+| **JavaScript Bridge** | ✅ Yes | ❌ No |
+| **Full Control** | ✅ Yes | ❌ Limited |
+| **Offline Support** | ✅ Via cache | ✅ Service workers |
+| **APK Size** | Larger | Smaller |
+| **Updates** | Depends on device | Auto-updated |
+| **Web State Access** | ✅ Full access | ❌ No access |
+
+## 🚀 Advanced Features
+
+### Adding JavaScript Interface
+
+You can add a JavaScript interface to communicate between web and native:
+
+```java
+public class WebAppInterface {
+    Context mContext;
+    
+    WebAppInterface(Context c) {
+        mContext = c;
+    }
+    
+    @JavascriptInterface
+    public void showToast(String toast) {
+        Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+    }
+}
+
+// In onCreate:
+webView.addJavascriptInterface(new WebAppInterface(this), "Android");
+```
+
+Then in your web JavaScript:
+```javascript
+Android.showToast("Hello from web!");
+```
 
 ## 📄 License
 
@@ -291,6 +254,5 @@ This project is licensed under the Apache License 2.0 - see the LICENSE file for
 ## 🔗 Links
 
 - Website: https://mandi-tracker.vercel.app/
-- Android Trusted Web Activities: https://developer.chrome.com/docs/android/trusted-web-activity/
-- Google Play Console: https://play.google.com/console/
-- Digital Asset Links Tester: https://developers.google.com/digital-asset-links/tools/generator
+- Android WebView Guide: https://developer.android.com/guide/webapps/webview
+- WebView Best Practices: https://developer.android.com/guide/webapps/best-practices
