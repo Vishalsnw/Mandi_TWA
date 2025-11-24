@@ -7,7 +7,7 @@
     <!-- Required for Android 11+ to query for browsers -->
     <queries>
         <intent>
-            <action android:name="androidx.browser.customtabs.action.CustomTabsService" />
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -85,7 +85,7 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="androidx.core.FILE_PROVIDER_PATHS"
+                android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
