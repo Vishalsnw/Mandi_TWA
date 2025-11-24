@@ -16,6 +16,13 @@ This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Track
 - **Signing**: Automated via GitHub Actions (requires secrets)
 
 ## Recent Changes
+- 2024-11-24: **CRITICAL FIX - App Crash Issue Resolved**
+  - Added missing `app/src/main/res/values/styles.xml` file
+  - Created custom `AppTheme` and `SplashTheme` styles
+  - Updated AndroidManifest.xml to use custom themes instead of direct AppCompat references
+  - Fixed resource references for proper theme inheritance
+  - **Root Cause**: App was crashing on launch because it was referencing Theme.AppCompat.Light.NoActionBar directly without proper resource configuration. Added proper theme definitions with color resources.
+
 - 2024-11-23: Complete Android TWA project setup with auto-keystore
   - Created Android project structure with Gradle build system
   - Configured AndroidManifest.xml for TWA targeting mandi-tracker.vercel.app
@@ -31,7 +38,13 @@ This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Track
 ├── app/
 │   ├── src/main/
 │   │   ├── AndroidManifest.xml      - App configuration and TWA settings
-│   │   └── res/                     - Android resources (colors, strings, etc)
+│   │   └── res/                     - Android resources (colors, strings, styles, etc)
+│   │       ├── values/
+│   │       │   ├── colors.xml       - App color definitions
+│   │       │   ├── strings.xml      - App text resources
+│   │       │   └── styles.xml       - App themes and styles (FIXED)
+│   │       └── drawable/
+│   │           └── splash.xml       - Splash screen configuration
 │   ├── build.gradle                 - App-level build configuration
 │   └── proguard-rules.pro          - Code optimization rules
 ├── .github/workflows/
@@ -47,6 +60,7 @@ This is an Android Trusted Web Activity (TWA) project that wraps the Mandi Track
 - **AndroidManifest.xml**: Defines TWA configuration, target URL, and app permissions
 - **build-release.yml**: GitHub Actions workflow for automated builds
 - **assetlinks.json**: Must be hosted on the target website for verification
+- **styles.xml**: App theme definitions (CRITICAL - was missing, causing crashes)
 - **colors.xml**: Theme colors (green theme #4CAF50)
 - **strings.xml**: App name and text resources
 
@@ -103,6 +117,7 @@ For the TWA to work properly:
 ## Customization Points
 - **App Name**: `app/src/main/res/values/strings.xml`
 - **Colors**: `app/src/main/res/values/colors.xml`
+- **Themes**: `app/src/main/res/values/styles.xml`
 - **Target URL**: `app/src/main/AndroidManifest.xml` (metadata and intent-filter)
 - **Package Name**: `app/build.gradle` (applicationId)
 
@@ -112,6 +127,11 @@ For the TWA to work properly:
 3. Download APK/AAB from Artifacts
 4. Test APK on Android device
 5. Upload AAB to Google Play Console
+
+## Troubleshooting
+- **App crashes on launch**: Ensure styles.xml exists with proper theme definitions
+- **Build fails**: Check GitHub Actions logs for specific errors
+- **TWA shows browser UI**: Digital Asset Links verification failed
 
 ## User Preferences
 - This is an Android build project, not a web application
