@@ -10,6 +10,9 @@ A WebView app embeds your web application inside a native Android application us
 
 - ✅ Full-screen web app experience
 - ✅ JavaScript enabled with DOM storage support
+- ✅ **Voice Search Support** - Microphone permission handling for voice search functionality
+- ✅ **WhatsApp Sharing** - Seamless sharing to WhatsApp and other external apps
+- ✅ External app integration (WhatsApp, Phone, Email, SMS)
 - ✅ Custom splash screen and app icon
 - ✅ Back button navigation support
 - ✅ Responsive layout for all screen sizes
@@ -95,6 +98,30 @@ webSettings.setUseWideViewPort(true);            // Use wide viewport
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
 - **Theme Color**: #4CAF50 (Green)
+
+## 🎤 Voice Search & 📤 Sharing Features
+
+### Voice Search
+The app includes full voice search support with runtime permission handling:
+- **Microphone Permission**: The app requests microphone access when voice search is activated
+- **WebChromeClient Integration**: Handles permission requests from the web app
+- **Runtime Permissions**: Follows Android 6.0+ best practices for permission requests
+- **Secure**: Only grants microphone access when explicitly requested by the web app
+
+### WhatsApp & External App Sharing
+The app seamlessly handles sharing to external apps:
+- **WhatsApp**: Direct sharing via `whatsapp://`, `wa.me`, and `api.whatsapp.com` URLs
+- **Intent URLs**: Proper handling of `intent://` scheme with fallback support
+- **Phone Calls**: `tel:` links open the phone dialer
+- **Email**: `mailto:` links open email apps
+- **SMS**: `sms:` links open messaging apps
+- **Fallback Handling**: If an app isn't installed, falls back to browser or Play Store
+
+### Permissions Required
+- `INTERNET` - For loading web content
+- `ACCESS_NETWORK_STATE` - For checking network status
+- `RECORD_AUDIO` - For voice search functionality
+- `MODIFY_AUDIO_SETTINGS` - For audio configuration
 
 ## 🎨 Customization
 
