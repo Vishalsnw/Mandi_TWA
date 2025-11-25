@@ -4,6 +4,7 @@
 This is an Android WebView application that wraps the Mandi Tracker web app (https://mandi-tracker.vercel.app/) into a native Android app. The app was recently converted from a Trusted Web Activity (TWA) to a WebView implementation.
 
 ## Recent Changes (November 25, 2025)
+- **Updated Version to 1.2**: Incremented versionCode to 2 and versionName to "1.2"
 - **Updated API Level to 35**: Upgraded compileSdk and targetSdk from 34 to 35 (Android 15)
 - **Updated App Icon and Splash Screen**: Replaced with new Mandi Tracker basket logo featuring vegetables and rupee symbol
   - Updated all mipmap densities (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
