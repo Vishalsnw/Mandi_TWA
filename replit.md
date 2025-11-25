@@ -4,6 +4,11 @@
 This is an Android WebView application that wraps the Mandi Tracker web app (https://mandi-tracker.vercel.app/) into a native Android app. The app was recently converted from a Trusted Web Activity (TWA) to a WebView implementation.
 
 ## Recent Changes (November 25, 2025)
+- **Updated API Level to 35**: Upgraded compileSdk and targetSdk from 34 to 35 (Android 15)
+- **Updated App Icon and Splash Screen**: Replaced with new Mandi Tracker basket logo featuring vegetables and rupee symbol
+  - Updated all mipmap densities (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
+  - Updated both regular and round icon variants
+  - Splash screen now displays the new logo
 - **Integrated Google AdMob**: Added Google Mobile Ads SDK for monetization
   - Implemented interstitial ad that shows after splash screen before app opens
   - Implemented native advanced ad displayed at bottom of WebView in MainActivity
@@ -48,7 +53,7 @@ This is an Android WebView application that wraps the Mandi Tracker web app (htt
 - **Package Name**: com.mandi.tracker
 - **Target URL**: https://mandi-tracker.vercel.app/
 - **Min SDK**: 21 (Android 5.0)
-- **Target SDK**: 34 (Android 14)
+- **Target SDK**: 35 (Android 15)
 - **WebView Features**: JavaScript enabled, DOM storage, database support, back navigation, voice search, WhatsApp sharing
 - **Permissions**: INTERNET, ACCESS_NETWORK_STATE, RECORD_AUDIO, MODIFY_AUDIO_SETTINGS
 - **AdMob Integration**: 
