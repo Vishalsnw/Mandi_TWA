@@ -38,6 +38,10 @@
         android:usesCleartextTraffic="false"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5538218540896625~6869629863"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
