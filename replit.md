@@ -4,6 +4,7 @@
 This is an Android WebView application that wraps the Mandi Tracker web app (https://mandi-tracker.vercel.app/) into a native Android app. The app was recently converted from a Trusted Web Activity (TWA) to a WebView implementation.
 
 ## Recent Changes (November 25, 2025)
+- **Added Animated Splash Screen**: Implemented professional splash screen with fade-in animation and proper lifecycle management
 - **Added Voice Search Support**: Implemented microphone permission handling with WebChromeClient
 - **Added WhatsApp Sharing**: Enabled sharing to WhatsApp and external apps with proper intent handling
 - **Added Runtime Permissions**: Implemented Android 6.0+ runtime permission requests

@@ -8,6 +8,7 @@ A WebView app embeds your web application inside a native Android application us
 
 ## 🚀 Features
 
+- ✅ **Animated Splash Screen** - Beautiful fade-in animation with logo on app launch
 - ✅ Full-screen web app experience
 - ✅ JavaScript enabled with DOM storage support
 - ✅ **Voice Search Support** - Microphone permission handling for voice search functionality
@@ -122,6 +123,40 @@ The app seamlessly handles sharing to external apps:
 - `ACCESS_NETWORK_STATE` - For checking network status
 - `RECORD_AUDIO` - For voice search functionality
 - `MODIFY_AUDIO_SETTINGS` - For audio configuration
+
+## 🎬 Animated Splash Screen
+
+The app includes a professional animated splash screen that displays when launching:
+- **Logo Animation**: Fade-in and scale animation (1.5 seconds)
+- **Duration**: 2.5 seconds total splash time
+- **Smooth Transition**: Fade effect when transitioning to main app
+- **Lifecycle Safe**: Properly handles background/foreground scenarios without memory leaks
+- **Customizable**: Easy to modify animation duration, logo, and colors
+
+### Customizing the Splash Screen
+
+**Change Splash Duration:**
+Edit `SplashActivity.java`:
+```java
+private static final int SPLASH_DURATION = 2500; // Change to your preferred duration in milliseconds
+```
+
+**Change Logo:**
+Replace the logo in `activity_splash.xml`:
+```xml
+<ImageView
+    android:id="@+id/splash_logo"
+    android:src="@mipmap/ic_launcher" <!-- Change to your logo -->
+```
+
+**Change Background Color:**
+Edit `colors.xml`:
+```xml
+<color name="colorPrimary">#YourColor</color>
+```
+
+**Modify Animation:**
+Edit `res/anim/fade_in.xml` to customize the animation effects.
 
 ## 🎨 Customization
 
