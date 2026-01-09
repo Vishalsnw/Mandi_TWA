@@ -28,6 +28,8 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.gms.ads.nativead.NativeAdView;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private PermissionRequest myRequest;
     private NativeAd nativeAd;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +148,26 @@ public class MainActivity extends AppCompatActivity {
         webView.loadUrl("https://mandi-tracker.vercel.app/");
         
         loadNativeAd();
+        loadInterstitialAd();
+    }
+
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, "ca-app-pub-5538218540896625/8991475759", adRequest,
+            new InterstitialAdLoadCallback() {
+                @Override
+                public void onAdLoaded(InterstitialAd interstitialAd) {
+                    mInterstitialAd = interstitialAd;
+                    Log.d(TAG, "Interstitial ad loaded");
+                    mInterstitialAd.show(MainActivity.this);
+                }
+
+                @Override
+                public void onAdFailedToLoad(LoadAdError loadAdError) {
+                    Log.d(TAG, "Interstitial ad failed to load: " + loadAdError.getMessage());
+                    mInterstitialAd = null;
+                }
+            });
     }
 
     private void loadNativeAd() {
